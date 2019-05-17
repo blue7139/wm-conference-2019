@@ -2,17 +2,17 @@
 {
     public class ComponentSettingsProvider
     {
-        public string GetComponentSettings(int componentId)
+        public string GetComponentSettings()
         {
-            var componentSettings = GetCMFTagSettings(componentId);
+            var componentSettings = GetCMFTagSettings();
 
             if (string.IsNullOrEmpty(componentSettings))
             {
-                componentSettings = GetMenuItemSettings(componentId);
+                componentSettings = GetMenuItemSettings();
 
                 if (string.IsNullOrEmpty(componentSettings))
                 {
-                    componentSettings = GetPortalSettings(componentId);
+                    componentSettings = GetPortalSettings();
                 }
             }
 
@@ -20,34 +20,28 @@
         }
 
         #region private
-        private string GetCMFTagSettings(int componentId)
+        private string GetCMFTagSettings()
         {
-            if (componentId > 0 && componentId <=10)
-            { 
-                return "CMF Tag Settings";
-            }
-
-            return string.Empty;
+            return GetRandomSettings("CMF Tag Settings");
         }
 
-        private string GetMenuItemSettings(int componentId)
+        private string GetMenuItemSettings()
         {
-            if (componentId > 10 && componentId <= 20)
-            {
-                return "Menu Item Settings";
-            }
-
-            return string.Empty;
+            return GetRandomSettings("Menu Item Settings");
         }
 
-        private string GetPortalSettings(int componentId)
+        private string GetPortalSettings()
         {
-            if (componentId > 20 && componentId <= 30)
-            {
-                return "Portal Settings";
-            }
+            return GetRandomSettings("Portal Settings");
+        }
 
-            return string.Empty;
+        private string GetRandomSettings(string value)
+        {
+            var random = new System.Random();
+            var list = new string[] { string.Empty, value };
+            int index = random.Next(list.Length);
+
+            return list[index];
         }
         #endregion
     }
